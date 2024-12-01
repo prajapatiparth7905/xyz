@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login & Signup</title>
+    <style>
+        body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.container {
+    width: 100%;
+    max-width: 400px;
+    background-color: white;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    border-radius: 8px;
+}
+
+.form-box {
+    text-align: center;
+}
+
+.form-toggle button {
+    padding: 10px 20px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    cursor: pointer;
+    margin: 10px;
+}
+
+.form-toggle button.active {
+    background-color: #007BFF;
+    color: white;
+    border-color: #007BFF;
+}
+
+.form {
+    display: block;
+    margin-top: 20px;
+}
+
+input {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+button[type="submit"],
+button[type="button"] {
+    width: 100%;
+    padding: 10px;
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+button[type="submit"]:hover,
+button[type="button"]:hover {
+    background-color: #0056b3;
+}
+
+.switch-form {
+    margin-top: 15px;
+}
+
+.switch-form a {
+    color: #007BFF;
+    text-decoration: none;
+}
+
+.switch-form a:hover {
+    text-decoration: underline;
+}
+
+#forgot-password-btn {
+    background-color: #28a745;
+}
+
+#forgot-password-btn:hover {
+    background-color: #218838;
+}
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="form-box">
+            <div class="form-toggle">
+                <button id="login-btn" class="active">Login</button>
+                <button id="signup-btn">Signup</button>
+            </div>
+
+            <!-- Login Form -->
+            <form id="login-form" class="form">
+                <h2>Login</h2>
+                <label for="login-email">Email:</label>
+                <input type="email" id="login-email" name="email" required>
+                <label for="login-password">Password:</label>
+                <input type="password" id="login-password" name="password" required>
+                <button type="submit">Login</button>
+                <p class="switch-form">Don't have an account? <a href="#" id="to-signup">Signup</a></p>
+                <button type="button" id="forgot-password-btn">Forgot Password?</button>
+            </form>
+
+            <!-- Forgot Password Form (Hidden by default) -->
+            <form id="forgot-password-form" class="form" style="display: none;">
+                <h2>Reset Password</h2>
+                <label for="forgot-email">Enter your email:</label>
+                <input type="email" id="forgot-email" name="forgot-email" required>
+                <button type="submit">Submit</button>
+                <p class="switch-form">Remember your password? <a href="#" id="to-login-from-forgot">Login</a></p>
+            </form>
+
+            <!-- Signup Form -->
+            <form id="signup-form" class="form" style="display: none;">
+                <h2>Signup</h2>
+                <label for="signup-name">Full Name:</label>
+                <input type="text" id="signup-name" name="name" required>
+                <label for="signup-email">Email:</label>
+                <input type="email" id="signup-email" name="email" required>
+                <label for="signup-password">Password:</label>
+                <input type="password" id="signup-password" name="password" required>
+                <label for="signup-confirm-password">Confirm Password:</label>
+                <input type="password" id="signup-confirm-password" name="confirm-password" required>
+                <button type="submit">Signup</button>
+                <p class="switch-form">Already have an account? <a href="#" id="to-login">Login</a></p>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+    const loginForm = document.getElementById('login-form');
+    const signupForm = document.getElementById('signup-form');
+    const forgotPasswordForm = document.getElementById('forgot-password-form');
+    const loginBtn = document.getElementById('login-btn');
+    const signupBtn = document.getElementById('signup-btn');
+    const toSignup = document.getElementById('to-signup');
+    const toLogin = document.getElementById('to-login');
+    const toLoginFromForgot = document.getElementById('to-login-from-forgot');
+    const forgotPasswordBtn = document.getElementById('forgot-password-btn');
+
+    // Switch between login and signup forms
+    loginBtn.addEventListener('click', function () {
+        loginForm.style.display = 'block';
+        signupForm.style.display = 'none';
+        forgotPasswordForm.style.display = 'none';
+        loginBtn.classList.add('active');
+        signupBtn.classList.remove('active');
+    });
+
+    signupBtn.addEventListener('click', function () {
+        loginForm.style.display = 'none';
+        signupForm.style.display = 'block';
+        forgotPasswordForm.style.display = 'none';
+        signupBtn.classList.add('active');
+        loginBtn.classList.remove('active');
+    });
+
+    toSignup.addEventListener('click', function (e) {
+        e.preventDefault();
+        loginForm.style.display = 'none';
+        signupForm.style.display = 'block';
+        signupBtn.classList.add('active');
+        loginBtn.classList.remove('active');
+    });
+
+    toLogin.addEventListener('click', function (e) {
+        e.preventDefault();
+        signupForm.style.display = 'none';
+        loginForm.style.display = 'block';
+        loginBtn.classList.add('active');
+        signupBtn.classList.remove('active');
+    });
+
+    // Forgot Password Button
+    forgotPasswordBtn.addEventListener('click', function () {
+        loginForm.style.display = 'none';
+        forgotPasswordForm.style.display = 'block';
+    });
+
+    toLoginFromForgot.addEventListener('click', function (e) {
+        e.preventDefault();
+        forgotPasswordForm.style.display = 'none';
+        loginForm.style.display = 'block';
+    });
+
+    // Handle login form submission
+    loginForm.addEventListener('submit', function (e) {
+        e.preventDefault();
+
+        const email = document.getElementById('signup-email').value;
+        const password = document.getElementById('signup-password').value;
+
+        // Simple validation (replace with backend logic in real-world)
+        if (email == 'sparth123@gmail.com' && password == '123') {
+            alert('Login successful!');
+            // Redirect to another page or dashboard
+        } else {
+            window.location.href = "file:///C:/Users/PARTH%20PRAJAPATI/Desktop/hackathon/index.html";
+        }
+    });
+
+    // Handle signup form submission
+    signupForm.addEventListener('submit', function (e) {
+        e.preventDefault();
+
+        const name = document.getElementById('signup-name').value;
+        const email = document.getElementById('signup-email').value;
+        const password = document.getElementById('signup-password').value;
+        const confirmPassword = document.getElementById('signup-confirm-password').value;
+
+        // Simple validation (replace with backend logic in real-world)
+        if (password === confirmPassword) {
+            alert('Signup successful! Welcome, ' + name);
+            loginForm.style.display = 'block';
+            signupForm.style.display = 'none';
+        } else {
+            alert('Passwords do not match.');
+        }
+    });
+
+    // Handle forgot password form submission
+    forgotPasswordForm.addEventListener('submit', function (e) {
+        e.preventDefault();
+
+        const email = document.getElementById('forgot-email').value;
+
+        // Simple validation (replace with backend logic in real-world)
+        if (email === 'user@example.com') {
+            alert('A password reset link has been sent to your email.');
+            forgotPasswordForm.style.display = 'none';
+            loginForm.style.display = 'block';
+        } else {
+            alert('Email not found. Please try again.');
+        }
+    });
+});
+
+    </script>
+</body>
+</html>
